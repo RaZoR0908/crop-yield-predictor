@@ -6,7 +6,7 @@ from model import get_model
 
 def load_model(model_path, device):
     model = get_model(device)
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
     model.eval()
     return model
 
@@ -38,7 +38,6 @@ if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = load_model(MODEL_PATH, device)
 
-    # test with first image in data folder
     DATA_DIR = os.path.join(BASE_DIR, 'data')
     test_image = os.path.join(DATA_DIR, 'DJI_0006-h30.JPG')
 
