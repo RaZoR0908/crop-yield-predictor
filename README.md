@@ -1,42 +1,34 @@
-# Crop Yield Prediction using CNN
+# Crop Yield Predictor
 
-A deep learning system that predicts crop yield (tons/hectare) from drone aerial field images using EfficientNet transfer learning.
+Predicts crop yield (tons/hectare) from drone field images using EfficientNet transfer learning.
 
-## Demo
-- Input: Drone crop field image
-- Output: `{"predicted_yield": 4.5, "unit": "tons/hectare"}`
+**Demo:** Upload an image → `{"predicted_yield": 4.5, "unit": "tons/hectare"}`
 
 ## Project Structure
+```
 crop-yield-predictor/
-├── data/                   # Dataset images + labels.csv
-├── models/                 # Trained model weights
+├── data/               # Images + labels.csv
+├── models/             # Trained weights
 ├── src/
-│   ├── dataset.py          # Data loading and transforms
-│   ├── model.py            # EfficientNet CNN model
-│   ├── train.py            # Model training script
-│   ├── evaluate.py         # MAE/RMSE evaluation
-│   ├── predict.py          # Single image prediction
-│   └── generate_labels.py  # Generate yield labels from images
-├── api.py                  # FastAPI REST API
-├── requirements.txt        # Python dependencies
-└── README.md
+│   ├── dataset.py      # Data loading
+│   ├── model.py        # EfficientNet model
+│   ├── train.py        # Training
+│   ├── evaluate.py     # MAE/RMSE metrics
+│   ├── predict.py      # Single image inference
+│   └── generate_labels.py
+├── api.py              # FastAPI server
+└── requirements.txt
+```
 
 ## Model
-- Architecture: EfficientNet-B0 with custom regression head
-- Task: Regression (predicting yield in tons/hectare)
-- Input: 224x224 RGB drone field images
-- Output: Single yield value (tons/hectare)
-- Evaluation: MAE = 0.69, RMSE = 0.85
+- **Architecture:** EfficientNet-B0 with regression head
+- **Input:** 224×224 RGB drone images
+- **Output:** Yield in tons/hectare
+- **Metrics:** MAE = 0.69, RMSE = 0.85
 
-## Dataset
-Drone Camera Image Dataset of Agriculture Fields from Kaggle.
-👉 https://www.kaggle.com/datasets/suhelahamed/drone-camera-image-dataset-of-agriculture-fields
+## Setup
 
-Download and place all images in the `data/` folder.
-
-## Setup Instructions
-
-### 1. Clone the repository
+### 1. Clone the repo
 ```bash
 git clone https://github.com/RaZoR0908/crop-yield-predictor.git
 cd crop-yield-predictor
@@ -54,7 +46,7 @@ pip install -r requirements.txt
 ```
 
 ### 4. Download dataset
-Download images from Kaggle link above and place all JPG files in `data/` folder.
+Download images from [Kaggle](https://www.kaggle.com/datasets/suhelahamed/drone-camera-image-dataset-of-agriculture-fields) and place all `.jpg` files in `data/` folder.
 
 ### 5. Generate labels
 ```bash
@@ -79,29 +71,14 @@ python api.py
 ```
 
 ### 9. Test the API
-Open browser and go to:http://localhost:8000/docs
+Open browser → **http://localhost:8000/docs**
 Upload a drone field image and get yield prediction!
 
-## API Endpoints
-
+## Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | / | API status |
-| GET | /health | Health check |
-| POST | /predict | Predict crop yield from image |
+| GET | `/health` | Health check |
+| POST | `/predict` | Predict crop yield |
 
-## Sample API Response
-```json
-{
-  "predicted_yield": 5.11,
-  "unit": "tons/hectare",
-  "status": "success"
-}
-```
-
-## Tech Stack
-- Python 3.11
-- PyTorch + EfficientNet (Transfer Learning)
-- FastAPI + Uvicorn
-- Pillow, NumPy, Pandas
-- Scikit-learn (evaluation metrics)
+## Stack
+Python 3.11 · PyTorch · EfficientNet · FastAPI · Pillow · Scikit-learn
